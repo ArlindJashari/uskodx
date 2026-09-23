@@ -110,6 +110,9 @@ html { scroll-behavior: auto; -webkit-text-size-adjust: 100%; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 html.menu-is-open, html.menu-is-open body { overflow: hidden; }
+/* Keep transformed hero type from painting over the overlay. */
+html.menu-is-open main,
+html.menu-is-open footer { visibility: hidden; }
 
 body {
   margin: 0;
