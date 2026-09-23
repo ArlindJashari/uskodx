@@ -56,23 +56,52 @@
     --strip: 7.6vw;
   }
 }
-@media (max-width: 809px) {
+/* Tablet: fit the longest display line inside the inset, without the desktop scale. */
+@media (min-width: 810px) and (max-width: 1023px) {
   :root {
-    --inset: 16px;
-    --btn: 30px;
-    --gap: 12px;
-    --fs-display: 75px;
-    --lh-d1: 0.8;
-    --lh-d2: 1.1;
-    --fs-statement: 75px;
-    --lh-st: 0.9;
+    --inset: 24px;
+    --btn: 44px;
+    --gap: 16px;
+    --fs-display: clamp(104px, 13vw, 136px);
+    --lh-d1: 0.82;
+    --lh-d2: 0.95;
+    --fs-statement: clamp(72px, 10vw, 104px);
+    --lh-st: 0.92;
     --fs-h2: 40px;
     --fs-lg: 22px;
     --fs-label: 18px;
+    --strip: 0px;
+  }
+}
+@media (max-width: 809px) {
+  :root {
+    --inset: 16px;
+    --btn: 44px;
+    --gap: 12px;
+    --fs-display: clamp(52px, 14.2vw, 68px);
+    --lh-d1: 0.86;
+    --lh-d2: 1.02;
+    --fs-statement: clamp(44px, 12vw, 60px);
+    --lh-st: 0.95;
+    --fs-h2: 32px;
+    --fs-lg: 20px;
+    --fs-label: 16px;
     --fs-sm: 15px;
     --fs-xs: 13px;
     --strip: 0px;
   }
+}
+
+/* Fit display lines to the viewport. Longer statement line uses its own size in App.css. */
+@media (max-width: 1023px) {
+  :root {
+    --fs-display: min(148px, calc((100vw - 72px) / 4.9));
+    --fs-statement: min(112px, calc((100vw - 72px) / 5.2));
+    --lh-d1: 0.84;
+    --lh-d2: 1;
+    --lh-st: 0.92;
+  }
+  html, body { overflow-x: clip; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -191,6 +220,7 @@ hr { border: 0; border-top: 1px solid currentColor; opacity: 0.35; margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .mask-line__inner { transform: none !important; }
+  .strip__track, .fstrip__track { animation: none !important; transform: none !important; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
