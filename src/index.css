@@ -101,7 +101,6 @@
     --lh-d2: 1;
     --lh-st: 0.92;
   }
-  html, body { overflow-x: clip; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -126,6 +125,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+/* clip (not hidden) keeps sticky chapters working: hidden makes body a scrollport. */
+@media (max-width: 1023px) {
+  html, body { overflow-x: clip; }
 }
 
 img { display: block; max-width: 100%; }
@@ -224,6 +227,14 @@ hr { border: 0; border-top: 1px solid currentColor; opacity: 0.35; margin: 0; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .mask-line__inner { transform: none !important; }
   .strip__track, .fstrip__track { animation: none !important; transform: none !important; }
+  .mosaic__cell,
+  .cap__shot,
+  .index-row,
+  .foot__tile {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;

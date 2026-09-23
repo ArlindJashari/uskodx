@@ -592,24 +592,36 @@ img.wordmark { display: block; height: 28px; width: auto; }
   .why__stack {
     height: auto;
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    display: block;
     overflow: visible;
   }
+  /* Native sticky stack: each chapter locks and the next one slides over it.
+     No ScrollTrigger pin — touch scroll stays on the document. */
   .why-panel {
-    position: relative;
+    --stack-top: 0px;
+    position: sticky;
+    z-index: 1;
     inset: auto;
+    top: var(--stack-top);
     width: 100%;
     height: auto;
-    min-height: 0;
+    min-height: calc(100vh - var(--stack-top));
+    min-height: calc(100svh - var(--stack-top));
     transform: none !important;
+    will-change: auto;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 20px;
-    padding: 72px var(--inset) 36px;
-    overflow: hidden;
+    padding: 88px var(--inset) 18svh;
+    overflow: visible;
+    box-shadow: 0 -22px 36px rgba(16, 18, 17, 0.16);
   }
+  .why-panel:nth-child(1) { --stack-top: 0px; z-index: 1; box-shadow: none; }
+  .why-panel:nth-child(2) { --stack-top: 12px; z-index: 2; }
+  .why-panel:nth-child(3) { --stack-top: 24px; z-index: 3; }
+  .why-panel:nth-child(4) { --stack-top: 36px; z-index: 4; }
+  .why-panel + .why-panel { margin-top: -18svh; }
   .why-panel__num {
     display: block;
     align-self: flex-start;
@@ -628,7 +640,15 @@ img.wordmark { display: block; height: 28px; width: auto; }
 
   .strip { padding-bottom: 56px; }
   .strip__track, .fstrip__track {
-    animation: stripMarquee 42s linear infinite;
+    animation: stripMarquee 48s linear infinite;
+  }
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .strip__track,
+    .fstrip__track {
+      animation: stripDrift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
   }
   .strip__item, .fstrip__item { margin-top: 0 !important; }
   .strip__item img {
@@ -659,10 +679,11 @@ img.wordmark { display: block; height: 28px; width: auto; }
 
   .foot__stage { height: auto; }
   .foot__sticky {
-    position: relative;
-    top: auto;
-    height: auto;
-    padding: 28px 0 8px;
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    height: min(48svh, 380px);
+    padding: 0;
   }
   .foot__giant {
     font-size: min(18vw, 156px);
@@ -671,10 +692,12 @@ img.wordmark { display: block; height: 28px; width: auto; }
   }
   .foot__tiles {
     position: relative;
+    z-index: 1;
     inset: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 22px 14px;
+    margin-top: -14svh;
     padding: 18px 0 36px;
     pointer-events: none;
   }
@@ -719,6 +742,50 @@ img.wordmark { display: block; height: 28px; width: auto; }
   .news__fields,
   .news__fields--contact { grid-template-columns: 1fr; gap: 22px; }
   .news__shake { max-width: 100%; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      .mosaic__cell,
+      .cap__shot,
+      .index-row,
+      .foot__tile {
+        animation: touchRise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 46%;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .why-panel,
+    .why-panel + .why-panel {
+      position: relative;
+      top: auto;
+      min-height: 0;
+      margin-top: 0;
+      padding-bottom: 36px;
+      box-shadow: none;
+    }
+    .foot__sticky {
+      position: relative;
+      top: auto;
+      height: auto;
+      padding: 28px 0 8px;
+    }
+    .foot__tiles { margin-top: 0; }
+  }
+
+  @media (max-height: 500px) {
+    .why-panel,
+    .why-panel + .why-panel {
+      position: relative;
+      top: auto;
+      min-height: 0;
+      margin-top: 0;
+      padding-bottom: 28px;
+      box-shadow: none;
+    }
+  }
 }
 
 @media (max-width: 809px) {
@@ -740,10 +807,18 @@ img.wordmark { display: block; height: 28px; width: auto; }
   .mosaic { grid-template-columns: 1fr 1fr; }
   .foot__cols { grid-template-columns: 1fr; }
   .menu__grid { grid-template-columns: 1fr; }
-  .why-panel { padding-top: 64px; }
+  .why-panel { padding-top: 88px; }
 }
 
 @keyframes stripMarquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes stripDrift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-42%, 0, 0); }
+}
+@keyframes touchRise {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  to { opacity: 1; transform: none; }
 }

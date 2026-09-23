@@ -152,8 +152,8 @@ export function usePageMotion() {
     const ctx = gsap.context(() => {
 
       /* Desktop only: pinned chapter stack + scrubbed strips + pinned diagrams.
-         Below 1024 these pins fight touch scrolling, so the layout stacks in CSS
-         and the diagrams play once instead. */
+         Below 1024 the chapters use a CSS sticky stack (native touch scroll),
+         strips drift on a view timeline, and the diagrams play once. */
       mm.add(desktopQuery, () => {
         const pin = document.querySelector<HTMLElement>('[data-why-pin]')
         const panels = gsap.utils.toArray<HTMLElement>('[data-why-panel]')
