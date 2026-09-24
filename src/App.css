@@ -26,9 +26,36 @@ main { position: relative; }
   pointer-events: none;
   mix-blend-mode: normal;
 }
-.nav__brand, .nav__btn { pointer-events: auto; }
-.nav__brand img.wordmark { display:block; height:28px; width:auto; }
-@media (max-width: 809px) { .nav { padding: 10px; } img.wordmark { height: 22px; } }
+.nav__brand, .nav__btn { pointer-events: auto; position: relative; z-index: 1; }
+.nav__brand svg.wordmark { display: block; height: 28px; width: auto; }
+@media (max-width: 809px) { .nav { padding: 10px; } svg.wordmark { height: 22px; } }
+
+/* Frost fades in from 162px to 807px of scroll. The fill feathers top to bottom. */
+.nav__veil {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  top: -42px;
+  bottom: -114px;
+  pointer-events: none;
+  opacity: var(--nav-veil-opacity, 0);
+  transition: --nav-veil-opacity 0.18s cubic-bezier(0.44, 0, 0.56, 1);
+}
+.nav__veil-fill {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  -webkit-mask-image: var(--nav-frost-ink);
+  mask-image: var(--nav-frost-ink);
+}
+.nav--on-dark .nav__veil-fill { background: #000; }
+.nav--open .nav__veil { opacity: 0 !important; }
+@media (max-width: 1279px) {
+  .nav__veil { top: 0; bottom: 0; }
+}
 
 .nav__btn {
   width: var(--btn); height: var(--btn); border-radius: 50%;
@@ -38,8 +65,11 @@ main { position: relative; }
 .nav__btn:hover { transform: scale(1.05); }
 .nav__bars { display: flex; flex-direction: column; gap: 5px; width: 14px; }
 .nav__bars i { display: block; height: 1.5px; border-radius: 1px; background: var(--cream); transition: transform .35s var(--ease), background .3s; }
-.nav--open .nav__btn { background: var(--cream); }
-.nav--open .nav__bars i { background: var(--ink); }
+.nav--open .nav__btn,
+.nav--btn-on-dark .nav__btn { background: var(--cream); }
+.nav--open .nav__bars i,
+.nav--btn-on-dark .nav__bars i { background: var(--ink); }
+.nav--on-dark .wordmark .usko { color: #fff; }
 .nav__btn.is-open .nav__bars i:first-child { transform: translateY(3.25px) rotate(45deg); }
 .nav__btn.is-open .nav__bars i:last-child { transform: translateY(-3.25px) rotate(-45deg); }
 
@@ -548,7 +578,7 @@ main { position: relative; }
 @media (max-width: 1199px) { .news__fields { grid-template-columns: 1fr 1fr } }
 @media (max-width: 809px) { .news__fields { grid-template-columns: 1fr } }
 
-img.wordmark { display: block; height: 28px; width: auto; }
+svg.wordmark { display: block; height: 28px; width: auto; }
 
 /* ==========================================================================
    Small screens — phone and tablet. Desktop (≥1024) is unchanged above.
@@ -558,7 +588,7 @@ img.wordmark { display: block; height: 28px; width: auto; }
     align-items: center;
     padding: max(12px, env(safe-area-inset-top)) var(--inset) 12px;
   }
-  .nav__brand img.wordmark { height: 22px; width: auto; }
+  .nav__brand svg.wordmark { height: 22px; width: auto; }
   .nav__btn { width: 44px; height: 44px; }
 
   .hero {
