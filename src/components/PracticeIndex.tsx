@@ -13,10 +13,7 @@ export function PracticeIndex() {
   return (
     <section className="index" id="practice-index">
       <div className="index__head">
-        <h2 className="t-h2">
-          Practice
-          <sup className="index__count" aria-hidden="true">{ROWS.length}</sup>
-        </h2>
+        <h2 className="t-h2">Practice</h2>
         <p className="index__lede t-lg">
           A selection of the work we are in the middle of — platform, network and product
           systems, built with the same grammar: clear seams, written decisions, room to grow.

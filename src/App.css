@@ -402,14 +402,7 @@ main { position: relative; }
   display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
   align-items: start; padding-bottom: 46px;
 }
-.index__head h2 { position: relative; display: inline-block; justify-self: start; }
-.index__count {
-  position: absolute; top: -.1em; right: -1.1em;
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid var(--ink);
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: var(--fs-sm); line-height: 1; letter-spacing: 0;
-}
+.index__head h2 { justify-self: start; }
 .index__lede { max-width: 520px; }
 
 .index__rows { border-bottom: 1px dotted rgba(16, 18, 17, .5); }
@@ -703,7 +696,6 @@ svg.wordmark { display: block; height: 28px; width: auto; }
   .fstrip__item img { height: 42vw; }
 
   .index { padding-bottom: 72px; }
-  .index__head h2 { padding-right: 0.2em; }
   .index-row__link { min-height: 44px; align-items: center; }
   .index-row__copy p { max-width: none; }
 
