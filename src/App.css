@@ -30,7 +30,7 @@ main { position: relative; }
 .nav__brand svg.wordmark { display: block; height: 28px; width: auto; }
 @media (max-width: 809px) { .nav { padding: 10px; } svg.wordmark { height: 22px; } }
 
-/* Frost fades in from 162px to 807px of scroll. The fill feathers top to bottom. */
+/* Frost fades in from 162px to 807px of scroll. Wide screens feather past the bar. */
 .nav__veil {
   position: absolute;
   z-index: 0;
@@ -53,8 +53,19 @@ main { position: relative; }
 }
 .nav--on-dark .nav__veil-fill { background: #000; }
 .nav--open .nav__veil { opacity: 0 !important; }
+/* Phone and tablet: the fade is only the bar, tinted to the page behind it.
+   It stays solid through the wordmark, then feathers at the bottom edge.
+   A full-height white wash reads as a blank strip above the logo. */
 @media (max-width: 1279px) {
   .nav__veil { top: 0; bottom: 0; }
+  .nav__veil-fill,
+  .nav--on-dark .nav__veil-fill {
+    background: rgb(var(--nav-veil-rgb, 217 217 217));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+  }
 }
 
 .nav__btn {
@@ -586,7 +597,9 @@ svg.wordmark { display: block; height: 28px; width: auto; }
 @media (max-width: 1023px) {
   .nav {
     align-items: center;
-    padding: max(12px, env(safe-area-inset-top)) var(--inset) 12px;
+    /* Keep the wordmark tight under the browser chrome. Safe-area padding
+       here stretches a blank band above the logo. */
+    padding: 12px var(--inset);
   }
   .nav__brand svg.wordmark { height: 22px; width: auto; }
   .nav__btn { width: 44px; height: 44px; }
