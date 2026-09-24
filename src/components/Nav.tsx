@@ -39,9 +39,7 @@ export function Nav({ onToggle, open }: Props) {
 
   return (
     <header ref={navRef} className={open ? 'nav nav--open' : 'nav'}>
-      <div className="nav__veil" aria-hidden="true">
-        <div className="nav__veil-fill" />
-      </div>
+      <div className="nav__veil" aria-hidden="true" />
       <a className="nav__brand" href="#top" aria-label="USKODX — home">
         <Wordmark />
       </a>
