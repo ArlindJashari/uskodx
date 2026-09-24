@@ -21,7 +21,7 @@ main { position: relative; }
    ========================================================================== */
 .nav {
   position: fixed; inset: 0 0 auto 0; z-index: 300;
-  display: flex; align-items: flex-start; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   padding: var(--inset);
   pointer-events: none;
   mix-blend-mode: normal;
@@ -30,32 +30,22 @@ main { position: relative; }
 .nav__brand svg.wordmark { display: block; height: 28px; width: auto; }
 @media (max-width: 809px) { .nav { padding: 10px; } svg.wordmark { height: 22px; } }
 
-/* White frost fades in from 162px to 807px of scroll. It stays white on every
-   section. Wide screens feather past the bar; phone and tablet stay bar-height. */
+/* White gloss frost fades in from 162px to 807px of scroll. It stays the height
+   of the bar on every viewport, so page content reads through the glass. */
 .nav__veil {
   position: absolute;
   z-index: 0;
-  left: 0;
-  right: 0;
-  top: -42px;
-  bottom: -114px;
+  inset: 0;
   pointer-events: none;
-  opacity: var(--nav-veil-opacity, 0);
+  background: rgb(255 255 255 / calc(var(--nav-veil-opacity, 0) * 0.62));
+  -webkit-backdrop-filter: blur(calc(var(--nav-veil-opacity, 0) * 10px)) saturate(1.85);
+  backdrop-filter: blur(calc(var(--nav-veil-opacity, 0) * 10px)) saturate(1.85);
   transition: --nav-veil-opacity 0.18s cubic-bezier(0.44, 0, 0.56, 1);
 }
-.nav__veil-fill {
-  width: 100%;
-  height: 100%;
-  background: var(--nav-frost);
-}
-.nav--open .nav__veil { opacity: 0 !important; }
-/* Phone and tablet: the fade is only the bar. It stays solid white through the
-   wordmark, then feathers out at the bottom edge. */
-@media (max-width: 1279px) {
-  .nav__veil { top: 0; bottom: 0; }
-  .nav__veil-fill {
-    background: linear-gradient(to bottom, #fff 0%, #fff 54%, rgba(255, 255, 255, 0) 100%);
-  }
+.nav--open .nav__veil {
+  opacity: 0 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 .nav__btn {
@@ -577,9 +567,7 @@ svg.wordmark { display: block; height: 28px; width: auto; }
    ========================================================================== */
 @media (max-width: 1023px) {
   .nav {
-    align-items: flex-start;
-    /* Keep the wordmark on the opaque part of the white frost, tight under
-       the browser chrome. */
+    align-items: center;
     padding: 12px var(--inset);
   }
   .nav__brand svg.wordmark { height: 22px; width: auto; }
