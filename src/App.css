@@ -30,7 +30,8 @@ main { position: relative; }
 .nav__brand svg.wordmark { display: block; height: 28px; width: auto; }
 @media (max-width: 809px) { .nav { padding: 10px; } svg.wordmark { height: 22px; } }
 
-/* Frost fades in from 162px to 807px of scroll. Wide screens feather past the bar. */
+/* White frost fades in from 162px to 807px of scroll. It stays white on every
+   section. Wide screens feather past the bar; phone and tablet stay bar-height. */
 .nav__veil {
   position: absolute;
   z-index: 0;
@@ -45,26 +46,15 @@ main { position: relative; }
 .nav__veil-fill {
   width: 100%;
   height: 100%;
-  background: #fff;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  -webkit-mask-image: var(--nav-frost-ink);
-  mask-image: var(--nav-frost-ink);
+  background: var(--nav-frost);
 }
-.nav--on-dark .nav__veil-fill { background: #000; }
 .nav--open .nav__veil { opacity: 0 !important; }
-/* Phone and tablet: the fade is only the bar, tinted to the page behind it.
-   It stays solid through the wordmark, then feathers at the bottom edge.
-   A full-height white wash reads as a blank strip above the logo. */
+/* Phone and tablet: the fade is only the bar. It stays solid white through the
+   wordmark, then feathers out at the bottom edge. */
 @media (max-width: 1279px) {
   .nav__veil { top: 0; bottom: 0; }
-  .nav__veil-fill,
-  .nav--on-dark .nav__veil-fill {
-    background: rgb(var(--nav-veil-rgb, 217 217 217));
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+  .nav__veil-fill {
+    background: linear-gradient(to bottom, #fff 0%, #fff 54%, rgba(255, 255, 255, 0) 100%);
   }
 }
 
@@ -76,11 +66,9 @@ main { position: relative; }
 .nav__btn:hover { transform: scale(1.05); }
 .nav__bars { display: flex; flex-direction: column; gap: 5px; width: 14px; }
 .nav__bars i { display: block; height: 1.5px; border-radius: 1px; background: var(--cream); transition: transform .35s var(--ease), background .3s; }
-.nav--open .nav__btn,
-.nav--btn-on-dark .nav__btn { background: var(--cream); }
-.nav--open .nav__bars i,
-.nav--btn-on-dark .nav__bars i { background: var(--ink); }
-.nav--on-dark .wordmark .usko { color: #fff; }
+.nav--open .nav__btn { background: var(--cream); }
+.nav--open .nav__bars i { background: var(--ink); }
+.nav--open .wordmark .usko { color: #fff; }
 .nav__btn.is-open .nav__bars i:first-child { transform: translateY(3.25px) rotate(45deg); }
 .nav__btn.is-open .nav__bars i:last-child { transform: translateY(-3.25px) rotate(-45deg); }
 
@@ -589,9 +577,9 @@ svg.wordmark { display: block; height: 28px; width: auto; }
    ========================================================================== */
 @media (max-width: 1023px) {
   .nav {
-    align-items: center;
-    /* Keep the wordmark tight under the browser chrome. Safe-area padding
-       here stretches a blank band above the logo. */
+    align-items: flex-start;
+    /* Keep the wordmark on the opaque part of the white frost, tight under
+       the browser chrome. */
     padding: 12px var(--inset);
   }
   .nav__brand svg.wordmark { height: 22px; width: auto; }
