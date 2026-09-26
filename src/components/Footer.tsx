@@ -110,8 +110,10 @@ export function Footer() {
               <img src={person.photo} alt="" />
               <span className="sr-only">{person.name}, {person.role}. {person.bio}</span>
               <div className="foot__pop" id={`${baseId}-pop-${index}`} aria-hidden={open === index ? undefined : true}>
-                <p className="foot__pop-index">{String(index + 1).padStart(2, '0')}/{String(TEAM.length).padStart(2, '0')}</p>
-                <p className="foot__pop-role">{person.role}</p>
+                <div className="foot__pop-meta">
+                  <span className="foot__pop-index">{String(index + 1).padStart(2, '0')}/{String(TEAM.length).padStart(2, '0')}</span>
+                  <span className="foot__pop-role">{person.role}</span>
+                </div>
                 <p className="foot__pop-name">{person.name}</p>
                 <p className="foot__pop-bio">{person.bio}</p>
               </div>
