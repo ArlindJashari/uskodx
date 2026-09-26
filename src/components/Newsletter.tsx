@@ -1,4 +1,4 @@
-import { CONTACTS } from './site'
+import { ADDRESS, CONTACTS } from './site'
 
 export function Newsletter() {
   return (
@@ -8,7 +8,10 @@ export function Newsletter() {
         <div className="news__intro">
           <p className="t-lg t-lg--med">Are we the one?</p>
           <p className="t-lg">Then let&apos;s touch base offline. <span className="news__shake">Call us today, tomorrow, anytime.</span></p>
-          <p className="news__place t-sm">Lorem ipsum dolor sit amet</p>
+          <p className="news__place t-sm">{ADDRESS[1]}, {ADDRESS[2]}</p>
+          <div id="start">
+            <button type="button" className="pill pill--solid" data-start>Start a project</button>
+          </div>
         </div>
         {CONTACTS.map((c) => (
           <div key={c.email} className="news__person">

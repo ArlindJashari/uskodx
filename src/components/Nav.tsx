@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react'
-import { Wordmark } from './Wordmark'
+import { NAV } from './site'
+import { Symbol, Wordmark } from './Wordmark'
 
 type Props = { onToggle: () => void; open: boolean }
 
@@ -21,6 +22,9 @@ export function Nav({ onToggle, open }: Props) {
       const y = window.scrollY || document.documentElement.scrollTop || 0
       const opacity = open ? 0 : Math.max(0, Math.min(1, (y - SCROLL_START) / SCROLL_RANGE))
       document.documentElement.style.setProperty('--nav-veil-opacity', String(opacity))
+      const foldEnd = Math.max(320, window.innerHeight * 0.85)
+      const fold = open ? 0 : Math.max(0, Math.min(1, (y - 24) / (foldEnd - 24)))
+      nav.style.setProperty('--brand-fold', fold.toFixed(4))
     }
 
     const schedule = () => {
@@ -41,8 +45,18 @@ export function Nav({ onToggle, open }: Props) {
     <header ref={navRef} className={open ? 'nav nav--open' : 'nav'}>
       <div className="nav__veil" aria-hidden="true" />
       <a className="nav__brand" href="#top" aria-label="USKODX — home">
-        <Wordmark />
+        <span className="nav__symbol">
+          <Symbol />
+        </span>
+        <span className="nav__word">
+          <Wordmark />
+        </span>
       </a>
+      <nav className="nav__links" aria-label="Primary">
+        {NAV.map((item) => (
+          <a key={item.href} href={item.href}>{item.label}</a>
+        ))}
+      </nav>
       <button
         type="button"
         className={`nav__btn ${open ? 'is-open' : ''}`}

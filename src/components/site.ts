@@ -2,14 +2,232 @@ export const TONES = ['lime', 'ink', 'gray', 'cream'] as const
 export type Tone = (typeof TONES)[number]
 
 export const NAV = [
-  { href: '#capability', label: 'Capability' },
-  { href: '#practice', label: 'Practice' },
-  { href: '#contact', label: 'Get in touch' },
-]
+  { href: '#services', label: 'Services' },
+  { href: '#process', label: 'Process' },
+  { href: '#capability', label: 'Capabilities' },
+  { href: '#team', label: 'Team' },
+  { href: '#contact', label: 'Contact' },
+] as const
 
 export const CONTACTS = [
   { org: 'New business', name: 'Studio desk', email: 'hello@uskodx.com', phone: '+31 (0)6 3085 0119' },
   { org: 'Partnerships', name: 'Network desk', email: 'partners@uskodx.com', phone: '+31 (0)6 5192 6649' },
 ]
 
-export const ADDRESS = ['USKODX', 'Lorem ipsum 12', '0000 AB']
+export const INFO_EMAIL = 'info@uskodx.com'
+
+export const ADDRESS = [
+  'USKODX Corp',
+  '1961 Commerce Street',
+  'Yorktown Heights, NY 10598',
+  'United States',
+] as const
+
+/** Chapter panels, in the order the review arrows assign them. */
+export const SERVICES = [
+  {
+    n: '1',
+    tone: 'lime',
+    title: 'Software development',
+    items: [
+      'Custom software development',
+      'Web & mobile applications',
+      'API development & integration',
+      'Application modernization',
+      'Maintenance & support',
+      'QA & testing',
+    ],
+  },
+  {
+    n: '2',
+    tone: 'ink',
+    title: 'Network engineering & infrastructure',
+    items: [
+      'Network modernization',
+      'Cloud and network security support',
+      'Identity & access implementation',
+      'Monitoring and incident support',
+      'Zero-trust implementation support',
+      'Secure infrastructure operations',
+    ],
+  },
+  {
+    n: '3',
+    tone: 'gray',
+    title: 'Cybersecurity support',
+    items: [
+      'Ongoing technical operations',
+      'Infrastructure and application support',
+      'Network monitoring',
+      'Systems administration',
+      'Technical troubleshooting',
+      'Flexible managed-service support',
+    ],
+  },
+  {
+    n: '4',
+    tone: 'cream',
+    title: 'Cloud & infrastructure',
+    items: [
+      'Cloud migration & deployment',
+      'Infrastructure design & support',
+      'DevOps & automation',
+      'Containerization & orchestration',
+      'Cloud monitoring & optimization',
+      'Technical operations support',
+    ],
+  },
+] as const
+
+export const PROCESS = [
+  {
+    n: '01',
+    title: 'Discover',
+    iso: 2 as const,
+    img: '/images/F3.webp',
+    body: 'We start by understanding the business, the problem and the systems already in place. This gives the project a clear direction before any technical work begins.',
+  },
+  {
+    n: '02',
+    title: 'Architect',
+    iso: 3 as const,
+    img: '/images/F2.webp',
+    body: 'We map the structure of the solution before development starts. Every component, integration, and workflow is planned with a clear role.',
+  },
+  {
+    n: '03',
+    title: 'Build',
+    iso: 1 as const,
+    img: '/images/F6.webp',
+    body: 'We turn the plan into working software, networks and connected systems. The focus is on precision, performance, and long-term usability.',
+  },
+  {
+    n: '04',
+    title: 'Scale',
+    iso: 5 as const,
+    img: '/images/F4.webp',
+    body: 'We refine, support, and strengthen the system after launch. This helps it grow with the business without losing stability.',
+  },
+] as const
+
+export const VALUE_PROPS = [
+  {
+    title: 'Scalable capacity',
+    body: 'Add specialized technical resources without building every capability internally.',
+  },
+  {
+    title: 'Modern technology focus',
+    body: 'Cloud, software modernization, cybersecurity and resilient digital infrastructure.',
+  },
+  {
+    title: 'Flexible engagement',
+    body: 'Project, dedicated-team, staff-augmentation and managed-service models.',
+  },
+  {
+    title: 'Partner-ready delivery',
+    body: 'Support for direct clients, MSPs, systems integrators and prime contractors.',
+  },
+] as const
+
+export const DELIVER = [
+  {
+    n: '01',
+    title: 'Cloud & platform engineering',
+    items: [
+      'Cloud infrastructure & migration',
+      'AWS / Azure / hybrid-cloud support',
+      'DevOps and CI/CD',
+      'Infrastructure as Code',
+      'Containerized application deployment',
+      'Observability & platform operations',
+    ],
+  },
+  {
+    n: '02',
+    title: 'Software & application engineering',
+    items: [
+      'Custom application development',
+      'Web and backend engineering',
+      'API & systems integration',
+      'Legacy application modernization',
+      'QA / test automation',
+      'Application maintenance & support',
+    ],
+  },
+  {
+    n: '03',
+    title: 'Cybersecurity & network operations',
+    items: [
+      'Network modernization',
+      'Cloud and network security support',
+      'Identity & access implementation',
+      'Monitoring and incident support',
+      'Zero-trust implementation support',
+      'Secure infrastructure operations',
+    ],
+  },
+  {
+    n: '04',
+    title: 'Managed IT & technical support',
+    items: [
+      'Ongoing technical operations',
+      'Infrastructure and application support',
+      'Network monitoring',
+      'Systems administration',
+      'Technical troubleshooting',
+      'Flexible managed-service support',
+    ],
+  },
+] as const
+
+export const ENGAGEMENTS = [
+  {
+    n: '01',
+    title: 'Project-based delivery',
+    body: 'Defined scope, milestones, deliverables and ownership for technology initiatives.',
+  },
+  {
+    n: '02',
+    title: 'Dedicated technical team',
+    body: 'A scalable engineering team aligned to your product, platform or infrastructure roadmap.',
+  },
+  {
+    n: '03',
+    title: 'Staff augmentation',
+    body: 'Technical professionals integrated with your existing teams for short- or long-term capacity needs.',
+  },
+  {
+    n: '04',
+    title: 'Managed technical service',
+    body: 'Ongoing application, cloud, infrastructure, network and operational support under agreed service objectives.',
+  },
+] as const
+
+/** Footer photographs. The review asks for a zoom that reveals the data; no roster was supplied. */
+export const TEAM_SHOTS = [
+  {
+    img: '/images/F3.webp',
+    title: 'Software',
+    detail: 'Custom software development, web and mobile applications, APIs, modernization, maintenance and QA.',
+  },
+  {
+    img: '/images/F5.webp',
+    title: 'Networks',
+    detail: 'Network modernization, identity and access, zero-trust implementation and secure infrastructure operations.',
+  },
+  {
+    img: '/images/F2.webp',
+    title: 'Cloud',
+    detail: 'Cloud migration and deployment, infrastructure design, DevOps, containerization and cloud monitoring.',
+  },
+  {
+    img: '/images/F6.webp',
+    title: 'Security',
+    detail: 'Cloud and network security support, monitoring and incident response, and secure operations.',
+  },
+  {
+    img: '/images/F4.webp',
+    title: 'Operations',
+    detail: 'Ongoing technical operations, systems administration, troubleshooting and flexible managed-service support.',
+  },
+] as const
