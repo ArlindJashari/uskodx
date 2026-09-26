@@ -1,73 +1,128 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Newsletter } from './Newsletter'
-import { ADDRESS, CONTACTS, INFO_EMAIL, TEAM_SHOTS } from './site'
+import { ADDRESS, CONTACTS, INFO_EMAIL, TEAM } from './site'
+
+const WASH = ['gray', 'ink', 'cream', 'lime'] as const
+
+function finePointer() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches
+}
+
+function placePopover(tile: HTMLElement) {
+  const pop = tile.querySelector<HTMLElement>('.foot__pop')
+  if (!pop) return
+  const rect = tile.getBoundingClientRect()
+  const margin = 12
+  const popW = pop.offsetWidth || 280
+  const popH = pop.offsetHeight || 180
+  const narrow = window.innerWidth < 1024
+
+  if (narrow) {
+    const overflowRight = rect.left + popW > window.innerWidth - margin
+    const placeAbove = rect.bottom + margin + popH > window.innerHeight - margin && rect.top > popH + margin
+    pop.dataset.side = overflowRight ? 'left' : 'right'
+    pop.dataset.valign = placeAbove ? 'above' : 'below'
+    return
+  }
+
+  const spaceRight = window.innerWidth - rect.right - margin
+  const spaceLeft = rect.left - margin
+  const placeLeft = spaceRight < popW + 8 && spaceLeft >= spaceRight
+  const placeEnd = rect.top + popH > window.innerHeight - margin && rect.bottom > popH
+  pop.dataset.side = placeLeft ? 'left' : 'right'
+  pop.dataset.valign = placeEnd ? 'end' : 'start'
+}
 
 export function Footer() {
-  const dialogRef = useRef<HTMLDialogElement>(null)
-  const titleId = useId()
-  const [active, setActive] = useState<number | null>(null)
-  const shot = active == null ? null : TEAM_SHOTS[active]
+  const [open, setOpen] = useState<number | null>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const baseId = useId()
 
   useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
-    if (shot && !dialog.open) dialog.showModal()
-    if (!shot && dialog.open) dialog.close()
-  }, [shot])
+    const close = (event: PointerEvent) => {
+      if (finePointer()) return
+      const target = event.target as Element | null
+      if (!target?.closest('.foot__tile')) setOpen(null)
+    }
+    document.addEventListener('pointerdown', close)
+    return () => document.removeEventListener('pointerdown', close)
+  }, [])
+
+  useEffect(() => {
+    if (open == null) return
+    const tile = stageRef.current?.querySelector<HTMLElement>(`[data-team="${open}"]`)
+    if (tile) placePopover(tile)
+    const onLayout = () => {
+      const current = stageRef.current?.querySelector<HTMLElement>(`[data-team="${open}"]`)
+      if (current) placePopover(current)
+    }
+    window.addEventListener('resize', onLayout)
+    window.addEventListener('scroll', onLayout, { passive: true })
+    return () => {
+      window.removeEventListener('resize', onLayout)
+      window.removeEventListener('scroll', onLayout)
+    }
+  }, [open])
 
   return (
     <footer className="foot">
-      <div className="foot__stage" data-foot-stage>
+      <div className="foot__stage" data-foot-stage ref={stageRef}>
         <div className="foot__sticky">
           <span className="foot__giant" aria-hidden="true">USKODX</span>
         </div>
         <div className="foot__tiles">
-          {TEAM_SHOTS.map((tile, index) => (
+          {TEAM.map((person, index) => (
             <button
-              key={tile.title}
+              key={person.name}
               type="button"
-              className={`foot__tile foot__tile--${index + 1}`}
-              onClick={() => setActive(index)}
+              data-team={index}
+              className={`foot__tile foot__tile--${index + 1}${open === index ? ' is-open' : ''}`}
+              aria-expanded={open === index}
+              aria-controls={`${baseId}-pop-${index}`}
+              onPointerEnter={(event) => {
+                if (!finePointer() || event.pointerType !== 'mouse') return
+                placePopover(event.currentTarget)
+                setOpen(index)
+              }}
+              onPointerLeave={(event) => {
+                if (!finePointer() || event.pointerType !== 'mouse') return
+                setOpen((current) => (current === index ? null : current))
+              }}
+              onFocus={(event) => {
+                if (!event.currentTarget.matches(':focus-visible')) return
+                placePopover(event.currentTarget)
+                setOpen(index)
+              }}
+              onBlur={() => setOpen((current) => (current === index ? null : current))}
+              onClick={(event) => {
+                if (finePointer() || event.detail === 0) {
+                  event.preventDefault()
+                  return
+                }
+                placePopover(event.currentTarget)
+                setOpen((current) => (current === index ? null : index))
+              }}
             >
-              <span className={`foot__wash foot__wash--${['lime', 'gray', 'ink', 'cream', 'lime'][index]}`} />
-              <img src={tile.img} alt="" />
-              <span className="sr-only">{tile.title}. {tile.detail}</span>
+              <span className={`foot__wash foot__wash--${WASH[index]}`} />
+              <img src={person.photo} alt="" />
+              <span className="sr-only">{person.name}, {person.role}. {person.bio}</span>
+              <div className="foot__pop" id={`${baseId}-pop-${index}`} aria-hidden={open === index ? undefined : true}>
+                <p className="foot__pop-index">{String(index + 1).padStart(2, '0')}/{String(TEAM.length).padStart(2, '0')}</p>
+                <p className="foot__pop-role">{person.role}</p>
+                <p className="foot__pop-name">{person.name}</p>
+                <p className="foot__pop-bio">{person.bio}</p>
+              </div>
             </button>
           ))}
         </div>
         <div className="foot__team" id="team">
           <h2 className="t-h2">Team</h2>
           <p className="t-sm">
-            Select a photograph. It opens larger, with the discipline behind it.
+            <span className="foot__hint foot__hint--hover">Hover a portrait to meet the team.</span>
+            <span className="foot__hint foot__hint--touch">Tap a portrait to meet the team.</span>
           </p>
         </div>
       </div>
-
-      <dialog
-        ref={dialogRef}
-        className="shot"
-        aria-labelledby={titleId}
-        onClose={() => setActive(null)}
-        onClick={(event) => {
-          if (event.target === dialogRef.current) dialogRef.current?.close()
-        }}
-      >
-        {shot ? (
-          <div className="shot__panel">
-            <figure className="shot__figure">
-              <img src={shot.img} alt="" />
-            </figure>
-            <div className="shot__copy">
-              <p className="t-label t-label--med">Team</p>
-              <h2 className="t-h2" id={titleId}>{shot.title}</h2>
-              <p className="t-lg">{shot.detail}</p>
-              <button type="button" className="pill pill--solid" onClick={() => dialogRef.current?.close()}>
-                Close
-              </button>
-            </div>
-          </div>
-        ) : null}
-      </dialog>
 
       <Newsletter />
 
