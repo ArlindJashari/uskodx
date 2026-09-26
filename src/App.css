@@ -1090,26 +1090,17 @@ button.foot__tile {
     height: auto;
     display: flex;
     flex-direction: column;
+    padding-top: 8px;
     padding-bottom: 36px;
+    overflow-x: visible;
   }
-  .foot__sticky,
   .foot__team,
   .foot__tiles {
     min-width: 0;
     max-width: 100%;
   }
-  .foot__sticky {
-    position: relative;
-    top: auto;
-    height: auto;
-    padding: 28px 0 2px;
-  }
-  .foot__giant {
-    font-size: clamp(48px, 14vw, 112px);
-    line-height: 0.9;
-    letter-spacing: -0.06em;
-    overflow: hidden;
-  }
+  /* The giant wordmark sits above the heading and is cut off by the fixed header. */
+  .foot__sticky { display: none; }
   .foot__team {
     position: relative;
     top: auto;
@@ -1217,15 +1208,22 @@ button.foot__tile {
 
 @media (max-width: 767px) {
   .foot__tiles {
+    --team-gutter-start: max(var(--inset), env(safe-area-inset-left));
+    --team-gutter-end: max(var(--inset), env(safe-area-inset-right));
     display: flex;
     grid-template-columns: none;
     gap: 12px;
-    width: 100%;
+    box-sizing: border-box;
+    width: calc(100% + var(--team-gutter-start) + var(--team-gutter-end));
+    max-width: none;
+    margin-left: calc(-1 * var(--team-gutter-start));
+    margin-right: calc(-1 * var(--team-gutter-end));
+    padding-inline: var(--team-gutter-start) var(--team-gutter-end);
+    padding-bottom: 6px;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 0;
-    padding-bottom: 6px;
+    scroll-padding-inline: var(--team-gutter-start) var(--team-gutter-end);
     scrollbar-width: none;
   }
   .foot__tiles::-webkit-scrollbar { display: none; }
