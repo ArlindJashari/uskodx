@@ -377,17 +377,25 @@ main { position: relative; }
 }
 .foot__tiles { position: absolute; inset: 0; pointer-events: none; }
 .foot__tile { position: absolute; margin: 0; }
-.foot__tile img { position: relative; width: 100%; height: 100%; object-fit: cover; }
-.foot__wash { position: absolute; inset: -15% 14% 15% -9%; }
+.foot__tile img {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  filter: grayscale(1);
+  transition: filter .4s var(--ease);
+}
+.foot__tile.is-open img,
+.foot__tile:focus-visible img { filter: grayscale(0); }
+.foot__wash { position: absolute; inset: -12% 12% 14% -8%; pointer-events: none; }
 .foot__wash--lime { background: var(--lime); }
 .foot__wash--gray { background: var(--gray); }
 .foot__wash--ink { background: var(--ink); }
 .foot__wash--cream { background: var(--cream); }
-.foot__tile--1 { left: -1%;  top: 26%; width: 18.4%; aspect-ratio: 265/280; z-index: 3; }
-.foot__tile--2 { left: 24%;  top: 8%;  width: 19.2%; aspect-ratio: 277/250; z-index: 1; }
-.foot__tile--3 { left: 75%;  top: 14%; width: 24.3%; aspect-ratio: 350/260; z-index: 3; }
-.foot__tile--4 { left: 59%;  top: 52%; width: 20.7%; aspect-ratio: 298/295; z-index: 3; }
-.foot__tile--5 { left: 8%;   top: 74%; width: 21.5%; aspect-ratio: 310/240; z-index: 1; }
+.foot__tile--1 { left: 22%; top: 6%;  width: 16.5%; aspect-ratio: 4 / 5; z-index: 2; }
+.foot__tile--2 { left: 74%; top: 12%; width: 18%;   aspect-ratio: 4 / 5; z-index: 3; }
+.foot__tile--3 { left: 56%; top: 48%; width: 16.5%; aspect-ratio: 4 / 5; z-index: 3; }
+.foot__tile--4 { left: 6%;  top: 62%; width: 16.5%; aspect-ratio: 4 / 5; z-index: 2; }
+.foot__tile.is-open,
+.foot__tile:focus-visible { z-index: 6; }
 
 .foot__cols {
   display: grid;
@@ -772,15 +780,13 @@ svg.wordmark { display: block; height: 28px; width: auto; }
   .foot__tile--1,
   .foot__tile--2,
   .foot__tile--3,
-  .foot__tile--4,
-  .foot__tile--5 {
+  .foot__tile--4 {
     position: relative;
     left: auto;
     top: auto;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 5;
   }
-  .foot__tile--5 { grid-column: 1 / -1; width: calc(50% - 7px); }
   .foot__cols { grid-template-columns: 1fr 1fr; row-gap: 28px; }
 
   .menu {
@@ -916,6 +922,71 @@ button.foot__tile {
 }
 .foot__team h2 { font-size: clamp(32px, 4vw, 48px); }
 .foot__team p { margin-top: 8px; }
+.foot__hint--touch { display: none; }
+@media (max-width: 1023px), ((hover: none) and (pointer: coarse)) {
+  .foot__hint--hover { display: none; }
+  .foot__hint--touch { display: inline; }
+}
+
+.foot__pop {
+  position: absolute;
+  z-index: 2;
+  width: min(280px, calc(100vw - 32px));
+  padding: 16px 16px 18px;
+  background: var(--cream);
+  color: var(--ink);
+  border-radius: 16px;
+  border-top: 3px solid var(--lime);
+  box-shadow: 0 18px 40px rgba(16, 18, 17, 0.14);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .28s var(--ease), transform .28s var(--ease);
+}
+.foot__tile.is-open .foot__pop,
+.foot__tile:focus-visible .foot__pop {
+  opacity: 1;
+  transform: none;
+}
+.foot__pop-index {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--gray);
+  font-variant-numeric: tabular-nums;
+}
+.foot__pop-role {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+.foot__pop-name {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: var(--ls-text);
+  line-height: 1.1;
+}
+.foot__pop-bio {
+  margin-top: 8px;
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  letter-spacing: var(--ls-text);
+}
+@media (min-width: 1024px) {
+  .foot__pop { left: calc(100% + 14px); top: 12px; }
+  .foot__pop[data-side="left"] { left: auto; right: calc(100% + 14px); }
+  .foot__pop[data-valign="end"] { top: auto; bottom: 12px; }
+}
+@media (max-width: 1023px) {
+  .foot__pop { left: 0; top: calc(100% + 10px); }
+  .foot__pop[data-side="left"] { left: auto; right: 0; }
+  .foot__pop[data-valign="above"] { top: auto; bottom: calc(100% + 10px); }
+}
 
 .brief, .shot {
   border: 0; padding: 0; margin: auto;

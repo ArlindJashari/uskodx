@@ -79,31 +79,30 @@ export const SERVICES = [
   },
 ] as const
 
-/** Footer photographs. The review asks for a zoom that reveals the data; no roster was supplied. */
-export const TEAM_SHOTS = [
+/** Placeholder portraits until the client sends real photographs. */
+export const TEAM = [
   {
-    img: '/images/F3.webp',
-    title: 'Software',
-    detail: 'Custom software development, web and mobile applications, APIs, modernization, maintenance and QA.',
+    name: 'Team member 01',
+    role: 'Software engineering lead',
+    bio: 'Leads custom software and application modernization, from architecture to release.',
+    photo: '/team/team-1.webp',
   },
   {
-    img: '/images/F5.webp',
-    title: 'Networks',
-    detail: 'Network modernization, identity and access, zero-trust implementation and secure infrastructure operations.',
+    name: 'Team member 02',
+    role: 'Cloud & infrastructure architect',
+    bio: 'Designs cloud migrations, DevOps pipelines and resilient infrastructure.',
+    photo: '/team/team-2.webp',
   },
   {
-    img: '/images/F2.webp',
-    title: 'Cloud',
-    detail: 'Cloud migration and deployment, infrastructure design, DevOps, containerization and cloud monitoring.',
+    name: 'Team member 03',
+    role: 'Network & security engineer',
+    bio: 'Runs network modernization, zero-trust and security operations support.',
+    photo: '/team/team-3.webp',
   },
   {
-    img: '/images/F6.webp',
-    title: 'Security',
-    detail: 'Cloud and network security support, monitoring and incident response, and secure operations.',
-  },
-  {
-    img: '/images/F4.webp',
-    title: 'Operations',
-    detail: 'Ongoing technical operations, systems administration, troubleshooting and flexible managed-service support.',
+    name: 'Team member 04',
+    role: 'Delivery & managed services',
+    bio: 'Keeps projects, dedicated teams and managed services moving on schedule.',
+    photo: '/team/team-4.webp',
   },
 ] as const
