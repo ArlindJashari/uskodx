@@ -1,7 +1,5 @@
 import { Iso } from './Iso'
 
-const STEPS = ['Discover', 'Architect', 'Build', 'Scale'] as const
-
 const ROWS = [
   { title: 'Discover', body: 'We start by understanding the business, the problem and the systems already in place. This gives the project a clear direction before any technical work begins.', img: '/images/F3.webp', iso: 1 as const },
   { title: 'Architect', body: 'We map the structure of the solution before development starts. Every component, integration, and workflow is planned with a clear role.', img: '/images/F2.webp', iso: 2 as const },
@@ -34,7 +32,6 @@ export function PracticeIndex() {
             </div>
             <figure className="index-row__media">
               <img src={r.img} alt="" />
-              <figcaption className="t-sm">{STEPS.join(' · ')}</figcaption>
             </figure>
           </article>
         ))}
