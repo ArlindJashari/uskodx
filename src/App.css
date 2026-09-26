@@ -931,7 +931,10 @@ button.foot__tile {
 .foot__pop {
   position: absolute;
   z-index: 2;
-  width: min(280px, calc(100vw - 32px));
+  left: 0;
+  top: 12px;
+  width: 100%;
+  max-width: 100%;
   padding: 16px 16px 18px;
   background: var(--cream);
   color: var(--ink);
@@ -978,15 +981,34 @@ button.foot__tile {
   letter-spacing: var(--ls-text);
 }
 @media (min-width: 1024px) {
-  .foot__pop { left: calc(100% + 14px); top: 12px; }
-  .foot__pop[data-side="left"] { left: auto; right: calc(100% + 14px); }
-  .foot__pop[data-valign="end"] { top: auto; bottom: 12px; }
+  .foot__tile.is-open .foot__pop,
+  .foot__tile:focus-visible .foot__pop {
+    width: min(280px, calc(100vw - 48px));
+    max-width: none;
+    left: calc(100% + 14px);
+  }
+  .foot__tile.is-open .foot__pop[data-side="left"],
+  .foot__tile:focus-visible .foot__pop[data-side="left"] {
+    left: auto;
+    right: calc(100% + 14px);
+  }
+  .foot__tile.is-open .foot__pop[data-valign="end"],
+  .foot__tile:focus-visible .foot__pop[data-valign="end"] {
+    top: auto;
+    bottom: 12px;
+  }
 }
 @media (max-width: 1023px) {
-  .foot__pop { left: 0; top: calc(100% + 10px); }
+  .foot__pop { top: calc(100% + 10px); }
+  .foot__tile.is-open .foot__pop,
+  .foot__tile:focus-visible .foot__pop {
+    width: min(280px, calc(100vw - 32px));
+    max-width: none;
+  }
   .foot__pop[data-side="left"] { left: auto; right: 0; }
   .foot__pop[data-valign="above"] { top: auto; bottom: calc(100% + 10px); }
 }
+.foot__stage { overflow-x: clip; }
 
 .brief, .shot {
   border: 0; padding: 0; margin: auto;
