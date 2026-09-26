@@ -1,25 +1,21 @@
 const SHOTS = [
-  { img: '/images/F1.webp', caption: 'Product surfaces' },
-  { img: '/images/F3.webp', caption: 'Platform build' },
-  { img: '/images/F4.webp', caption: 'Network fabric' },
-  { img: '/images/F2.webp', caption: 'Interlaced structure' },
-  { img: '/images/F6.webp', caption: 'Delivery rhythm' },
-  { img: '/images/F5.webp', caption: 'Material detail' },
-  { img: '/images/F7.webp', caption: 'Structural light' },
-  { img: '/images/F3.webp', caption: 'Reliability' },
-  { img: '/images/F4.webp', caption: 'Integrations' },
-  { img: '/images/F1.webp', caption: 'Room to grow' },
+  { img: '/images/F1.webp', caption: 'Cloud & platform engineering' },
+  { img: '/images/F3.webp', caption: 'Software & application engineering' },
+  { img: '/images/F4.webp', caption: 'Cybersecurity & network operations' },
+  { img: '/images/F2.webp', caption: 'Managed IT & technical support' },
+  { img: '/images/F6.webp', caption: 'Cloud & platform engineering' },
+  { img: '/images/F5.webp', caption: 'Software & application engineering' },
+  { img: '/images/F7.webp', caption: 'Cybersecurity & network operations' },
+  { img: '/images/F3.webp', caption: 'Managed IT & technical support' },
+  { img: '/images/F4.webp', caption: 'Cloud & platform engineering' },
+  { img: '/images/F1.webp', caption: 'Software & application engineering' },
 ]
 
 const LIST = [
-  { label: 'Discovery & strategy', tones: ['lime'] },
-  { label: 'Product design', tones: ['lime'] },
-  { label: 'Platform build', tones: ['lime'] },
-  { label: 'Integrations', tones: ['lime', 'ink', 'gray', 'cream'] },
-  { label: 'Data & networks', tones: ['lime', 'ink', 'gray', 'cream'] },
-  { label: 'Cloud architecture', tones: ['lime', 'ink', 'gray', 'cream'] },
-  { label: 'Reliability', tones: ['ink', 'gray', 'cream'] },
-  { label: 'Support', tones: ['lime', 'ink', 'gray', 'cream'] },
+  { label: 'Cloud & platform engineering', tones: ['lime'] },
+  { label: 'Software & application engineering', tones: ['lime'] },
+  { label: 'Cybersecurity & network operations', tones: ['lime', 'ink', 'gray', 'cream'] },
+  { label: 'Managed IT & technical support', tones: ['lime', 'ink', 'gray', 'cream'] },
 ] as const
 
 export function Capability() {
@@ -35,11 +31,10 @@ export function Capability() {
       <div className="cap__body">
         <aside className="cap__rail">
           <div className="cap__rail-top">
-            <p className="t-lg">The one with the range to carry your whole system, not just a slice of it.</p>
+            <p className="t-lg">Built to extend your technology team.</p>
             <p className="t-sm">
-              In addition, we build a strong practice around every engagement — shared
-              rituals, written decisions and open instrumentation, so the teams we work
-              with keep moving long after we hand over.
+              Engineering connected systems. Technical capabilities across the platforms,
+              applications and operations your organization depends on.
             </p>
           </div>
           <div className="cap__rail-bottom">
@@ -53,7 +48,10 @@ export function Capability() {
                 </li>
               ))}
             </ul>
-            <p className="cap__note t-sm">The colours indicate the strand of USKODX that carries each capability.</p>
+            <p className="cap__note t-sm">
+              Market-aligned delivery. Cloud and digital infrastructure, cybersecurity, network
+              modernization, software and application modernization, DevOps and managed technical services.
+            </p>
           </div>
         </aside>
 
