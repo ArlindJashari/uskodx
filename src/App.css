@@ -192,13 +192,16 @@ main { position: relative; }
 .why-panel__rail {
   flex: 0 0 284px;
   width: 284px;
-  padding-top: 20px;
+  padding-top: 0;
   padding-bottom: 40px;
+}
+.why-panel__rail h3 { margin: 0; font-size: calc(var(--fs-lg) + 2px); }
+.why-panel__rail p { margin-top: 10px; }
+.why-panel__list {
+  margin-top: 14px;
+  padding-top: 20px;
   border-top: 1px solid currentColor;
 }
-.why-panel__rail h3 { margin: 0; }
-.why-panel__rail p { margin-top: 10px; }
-.why-panel__list { margin-top: 14px; }
 .why-panel__list li {
   position: relative;
   padding-left: 14px;
@@ -698,8 +701,9 @@ svg.wordmark { display: block; height: 28px; width: auto; }
     width: 100%;
     flex: none;
     margin-top: 4px;
-    padding: 16px 0 0;
+    padding: 0;
   }
+  .why-panel__list { padding-top: 16px; }
   .why-panel__rail p { line-height: 1.35; }
 
   .strip { padding-bottom: 56px; }
