@@ -220,6 +220,10 @@ hr { border: 0; border-top: 1px solid currentColor; opacity: 0.35; margin: 0; }
 }
 .wordmark .usko { color: var(--ink); }
 .wordmark .dx { color: var(--lime); }
+.symbol { display: block; }
+.symbol__ink { fill: currentColor; }
+.symbol__lime { fill: #b7c848; }
+.symbol__gray { fill: #a8aeaa; }
 
 /* ---------- reveal primitives ---------- */
 .reveal { opacity: 0; transform: translateY(24px); }

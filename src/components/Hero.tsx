@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const WORDS = ['Driven', 'Building', 'Connected', 'Precise', 'Scaling', 'Curious', 'Original', 'Ambitious', 'Driven']
-
+const WORDS = ['Software', 'Networks', 'Cloud', 'Security', 'Software']
 
 export function Hero() {
   const [i, setI] = useState(0)
@@ -31,12 +30,15 @@ export function Hero() {
 
       <div className="hero__rail">
         <div className="hero__rail-inner">
-          <p className="t-label t-label--med">Systems studio for software &amp; networks</p>
+          <p className="t-label t-label--med">Systems that scale</p>
           <p className="t-label">Where engineering rigour seamlessly blends with considered design.</p>
-          <p className="hero__rail-cta t-sm">
-            Are you the one?
-            <a className="pill pill--solid" href="#contact">Learn more</a>
-          </p>
+          <div className="hero__rail-cta">
+            <p className="t-sm">Are you the one?</p>
+            <div className="hero__rail-actions">
+              <a className="pill pill--outline" href="#services">Explore our services</a>
+              <a className="pill pill--solid" href="#start" data-start>Start a project</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

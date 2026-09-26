@@ -9,6 +9,7 @@ import { Statement } from './components/Statement'
 import { Mosaic } from './components/Mosaic'
 import { Capability } from './components/Capability'
 import { Footer } from './components/Footer'
+import { StartProject } from './components/StartProject'
 import { useMaskLines, usePageMotion, useReveal, useSmoothScroll } from './hooks/useMotion'
 import './App.css'
 
@@ -36,6 +37,7 @@ export default function App() {
         <Capability />
       </main>
       <Footer />
+      <StartProject />
     </div>
   )
 }

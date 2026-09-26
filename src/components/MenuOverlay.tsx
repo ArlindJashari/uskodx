@@ -33,7 +33,11 @@ export function MenuOverlay({ open, onClose }: Props) {
         </ul>
         <div className="menu__meta">
           <p className="t-label t-label--med">Address</p>
-          <p className="t-label">{ADDRESS[1]}<br />{ADDRESS[2]}</p>
+          <p className="t-label">
+            {ADDRESS.map((line, i) => (
+              <span key={line}>{i > 0 && <br />}{line}</span>
+            ))}
+          </p>
           {CONTACTS.map((c) => (
             <div key={c.email} className="menu__meta-block">
               <p className="t-label t-label--med">{c.org}</p>

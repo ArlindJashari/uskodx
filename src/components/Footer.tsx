@@ -1,28 +1,86 @@
+import { useEffect, useId, useRef, useState } from 'react'
 import { Newsletter } from './Newsletter'
-import { ADDRESS, CONTACTS } from './site'
+import { ADDRESS, CONTACTS, INFO_EMAIL, TEAM_SHOTS } from './site'
 
 export function Footer() {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const titleId = useId()
+  const [active, setActive] = useState<number | null>(null)
+  const shot = active == null ? null : TEAM_SHOTS[active]
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+    if (shot && !dialog.open) dialog.showModal()
+    if (!shot && dialog.open) dialog.close()
+  }, [shot])
+
   return (
     <footer className="foot">
       <div className="foot__stage" data-foot-stage>
         <div className="foot__sticky">
           <span className="foot__giant" aria-hidden="true">USKODX</span>
         </div>
-        <div className="foot__tiles" aria-hidden="true">
-          <figure className="foot__tile foot__tile--1"><span className="foot__wash foot__wash--lime" /><img src="/images/F3.webp" alt="" /></figure>
-          <figure className="foot__tile foot__tile--2"><span className="foot__wash foot__wash--gray" /><img src="/images/F5.webp" alt="" /></figure>
-          <figure className="foot__tile foot__tile--3"><span className="foot__wash foot__wash--ink" /><img src="/images/F2.webp" alt="" /></figure>
-          <figure className="foot__tile foot__tile--4"><span className="foot__wash foot__wash--cream" /><img src="/images/F6.webp" alt="" /></figure>
-          <figure className="foot__tile foot__tile--5"><span className="foot__wash foot__wash--lime" /><img src="/images/F4.webp" alt="" /></figure>
+        <div className="foot__tiles">
+          {TEAM_SHOTS.map((tile, index) => (
+            <button
+              key={tile.title}
+              type="button"
+              className={`foot__tile foot__tile--${index + 1}`}
+              onClick={() => setActive(index)}
+            >
+              <span className={`foot__wash foot__wash--${['lime', 'gray', 'ink', 'cream', 'lime'][index]}`} />
+              <img src={tile.img} alt="" />
+              <span className="sr-only">{tile.title}. {tile.detail}</span>
+            </button>
+          ))}
+        </div>
+        <div className="foot__team" id="team">
+          <h2 className="t-h2">Team</h2>
+          <p className="t-sm">
+            Select a photograph. It opens larger, with the discipline behind it.
+          </p>
         </div>
       </div>
+
+      <dialog
+        ref={dialogRef}
+        className="shot"
+        aria-labelledby={titleId}
+        onClose={() => setActive(null)}
+        onClick={(event) => {
+          if (event.target === dialogRef.current) dialogRef.current?.close()
+        }}
+      >
+        {shot ? (
+          <div className="shot__panel">
+            <figure className="shot__figure">
+              <img src={shot.img} alt="" />
+            </figure>
+            <div className="shot__copy">
+              <p className="t-label t-label--med">Team</p>
+              <h2 className="t-h2" id={titleId}>{shot.title}</h2>
+              <p className="t-lg">{shot.detail}</p>
+              <button type="button" className="pill pill--solid" onClick={() => dialogRef.current?.close()}>
+                Close
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </dialog>
 
       <Newsletter />
 
       <div className="foot__cols">
         <div className="foot__col">
           <p className="t-label t-label--med">Address</p>
-          <p className="t-label">{ADDRESS[0]}<br />{ADDRESS[1]}<br />{ADDRESS[2]}</p>
+          <p className="t-label">
+            {ADDRESS.map((line, i) => (
+              <span key={line}>{i > 0 && <br />}{line}</span>
+            ))}
+            <br />
+            <a href={`mailto:${INFO_EMAIL}`}>{INFO_EMAIL}</a>
+          </p>
         </div>
         {CONTACTS.map((c) => (
           <div key={c.email} className="foot__col">
