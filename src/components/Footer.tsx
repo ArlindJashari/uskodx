@@ -12,22 +12,25 @@ function placePopover(tile: HTMLElement) {
   const pop = tile.querySelector<HTMLElement>('.foot__pop')
   if (!pop) return
   const rect = tile.getBoundingClientRect()
+  const stage = tile.closest('.foot__stage')?.getBoundingClientRect()
   const margin = 12
-  const popW = pop.offsetWidth || 280
-  const popH = pop.offsetHeight || 180
   const narrow = window.innerWidth < 1024
+  const popW = Math.min(280, window.innerWidth - (narrow ? 32 : 48))
+  const popH = Math.max(pop.offsetHeight, 160)
+  const limitLeft = (stage?.left ?? margin) + 8
+  const limitRight = (stage?.right ?? window.innerWidth - margin) - 8
 
   if (narrow) {
-    const overflowRight = rect.left + popW > window.innerWidth - margin
+    const overflowRight = rect.left + popW > limitRight
     const placeAbove = rect.bottom + margin + popH > window.innerHeight - margin && rect.top > popH + margin
     pop.dataset.side = overflowRight ? 'left' : 'right'
     pop.dataset.valign = placeAbove ? 'above' : 'below'
     return
   }
 
-  const spaceRight = window.innerWidth - rect.right - margin
-  const spaceLeft = rect.left - margin
-  const placeLeft = spaceRight < popW + 8 && spaceLeft >= spaceRight
+  const spaceRight = limitRight - rect.right - 14
+  const spaceLeft = rect.left - limitLeft - 14
+  const placeLeft = spaceRight < popW && spaceLeft >= spaceRight
   const placeEnd = rect.top + popH > window.innerHeight - margin && rect.bottom > popH
   pop.dataset.side = placeLeft ? 'left' : 'right'
   pop.dataset.valign = placeEnd ? 'end' : 'start'
