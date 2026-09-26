@@ -18,6 +18,15 @@ const LIST = [
   { label: 'Managed IT & technical support', tones: ['lime', 'ink', 'gray', 'cream'] },
 ] as const
 
+const MARKETS = [
+  'Cloud & digital infrastructure',
+  'Cybersecurity',
+  'Network modernization',
+  'Software & application modernization',
+  'DevOps',
+  'Managed technical services',
+] as const
+
 export function Capability() {
   return (
     <section className="cap" id="capability">
@@ -48,10 +57,17 @@ export function Capability() {
                 </li>
               ))}
             </ul>
-            <p className="cap__note t-sm">
-              Market-aligned delivery. Cloud and digital infrastructure, cybersecurity, network
-              modernization, software and application modernization, DevOps and managed technical services.
-            </p>
+            <div className="cap__note">
+              <p className="cap__note-label t-label t-label--med" id="cap-market">
+                <i className="cap__note-mark" aria-hidden="true" />
+                Market-aligned delivery
+              </p>
+              <ul className="cap__tags" aria-labelledby="cap-market">
+                {MARKETS.map((item) => (
+                  <li key={item} className="cap__tag">{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </aside>
 
