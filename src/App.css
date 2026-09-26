@@ -47,6 +47,19 @@ main { position: relative; }
 .nav__links { display: flex; align-items: center; gap: 22px; }
 .nav__links a { font-size: var(--fs-sm); line-height: 1; color: var(--ink); }
 .nav__links a:hover { opacity: 0.55; }
+@media (min-width: 1180px) {
+  .nav__links {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s var(--ease), visibility 0s linear .4s;
+  }
+  .nav--scrolled .nav__links {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .4s var(--ease), visibility 0s;
+  }
+  .nav--open .nav__links { opacity: 0; visibility: hidden; transition: none; }
+}
 @media (max-width: 1179px) { .nav__links { display: none; } }
 @media (max-width: 809px) { .nav { padding: 10px; } svg.wordmark { height: 22px; width: 73px; } .nav__symbol { width: 22px; height: 22px; } }
 

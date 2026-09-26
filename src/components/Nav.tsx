@@ -25,6 +25,7 @@ export function Nav({ onToggle, open }: Props) {
       const foldEnd = Math.max(320, window.innerHeight * 0.85)
       const fold = open ? 0 : Math.max(0, Math.min(1, (y - 24) / (foldEnd - 24)))
       nav.style.setProperty('--brand-fold', fold.toFixed(4))
+      nav.classList.toggle('nav--scrolled', !open && y > 24)
     }
 
     const schedule = () => {
